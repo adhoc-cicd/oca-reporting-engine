@@ -3,7 +3,7 @@
     <template id="substitution_report">
         <div class="page">Substitution Report</div>
     </template>
-    <report
+    <record
         id="substitution_report_print"
         string="Substitution For Technical guide"
         model="ir.module.module"
@@ -21,7 +21,7 @@
     <template id="substitution_report_2">
         <div class="page">Substitution Report 2</div>
     </template>
-    <report
+    <record
         id="substitution_report_print_2"
         string="Substitution 2 For Technical guide"
         model="ir.module.module"
