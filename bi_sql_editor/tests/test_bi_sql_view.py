@@ -1,6 +1,8 @@
 # Copyright 2017 Onestein (<http://www.onestein.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
+
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import SingleTransactionCase
@@ -73,7 +75,7 @@ class TestBiSqlViewEditor(SingleTransactionCase):
             [("name", "=", self.view.name)]
         )
         self.assertEqual(
-            len(bi), 1, "Bi Manager should have access to bi %s" % self.view.name
+            len(bi), 1, f"Bi Manager should have access to bi {self.view.name}"
         )
 
     def test_unlink(self):
@@ -90,7 +92,9 @@ class TestBiSqlViewEditor(SingleTransactionCase):
         self.assertEqual(copy_view.state, "ui_valid")
         with self.assertRaises(UserError):
             copy_view.unlink()
-        copy_view.button_set_draft()
+        logger_name = "odoo.addons.base.models.ir_model"
+        with self.assertLogs(logger_name, level=logging.WARNING):
+            copy_view.button_set_draft()
         self.assertNotEqual(
             copy_view.cron_id,
             False,
